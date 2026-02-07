@@ -20,6 +20,8 @@ spring:
     enabled: true
 
 app:
+  dev:
+    bypass-preauth: true
   crypto:
     key-store-path: keystore.p12
     key-store-password: changeit

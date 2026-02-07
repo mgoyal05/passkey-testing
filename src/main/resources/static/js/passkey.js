@@ -2,9 +2,26 @@ import { encryptFetch, credentialToJSON, webauthnCreateOptionsToPublic } from '.
 
 const button = document.getElementById('createPasskey');
 const status = document.getElementById('passkeyStatus');
+const errorBox = document.getElementById('passkeyError');
+const errorDetails = document.getElementById('passkeyErrorDetails');
+
+function showError(message, details) {
+  if (errorBox && errorDetails) {
+    errorDetails.textContent = details || message;
+    errorBox.style.display = 'block';
+  }
+}
+
+function clearError() {
+  if (errorBox && errorDetails) {
+    errorDetails.textContent = '';
+    errorBox.style.display = 'none';
+  }
+}
 
 button?.addEventListener('click', async () => {
   status.textContent = 'Requesting options...';
+  clearError();
   try {
     const options = await encryptFetch('/api/webauthn/register/options', {});
     const publicOptions = webauthnCreateOptionsToPublic(options);
@@ -15,6 +32,9 @@ button?.addEventListener('click', async () => {
     status.textContent = 'Passkey created! You can now use payments.';
     window.location.href = '/pay';
   } catch (err) {
-    status.textContent = err.message;
+    const message = err?.message || 'Passkey enrollment failed.';
+    status.textContent = message;
+    showError(message, err?.stack || message);
+    console.error('Passkey enrollment error:', err);
   }
 });

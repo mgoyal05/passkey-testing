@@ -13,6 +13,10 @@
         <p>This will create a discoverable, device-bound passkey on this device.</p>
         <button id="createPasskey">Create Passkey</button>
         <div class="status" id="passkeyStatus"></div>
+        <div class="status error" id="passkeyError" style="display:none;">
+            <strong>Enrollment Error</strong>
+            <pre id="passkeyErrorDetails"></pre>
+        </div>
     </div>
 </div>
 <script type="module" th:src="@{/js/passkey.js}"></script>

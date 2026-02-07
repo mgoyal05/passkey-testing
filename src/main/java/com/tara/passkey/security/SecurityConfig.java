@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.function.Supplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.Customizer;
@@ -13,6 +14,11 @@ import org.springframework.security.web.access.intercept.RequestAuthorizationCon
 
 @Configuration
 public class SecurityConfig {
+    private final boolean bypassPreAuth;
+
+    public SecurityConfig(@Value("${app.dev.bypass-preauth:false}") boolean bypassPreAuth) {
+        this.bypassPreAuth = bypassPreAuth;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -31,7 +37,7 @@ public class SecurityConfig {
     private AuthorizationManager<RequestAuthorizationContext> preAuth() {
         return (Supplier<org.springframework.security.core.Authentication> authentication, RequestAuthorizationContext context) -> {
             HttpSession session = context.getRequest().getSession(false);
-            boolean allowed = session != null && Boolean.TRUE.equals(session.getAttribute(SessionConstants.PRE_AUTH));
+            boolean allowed = bypassPreAuth || (session != null && Boolean.TRUE.equals(session.getAttribute(SessionConstants.PRE_AUTH)));
             return new AuthorizationDecision(allowed);
         };
     }
