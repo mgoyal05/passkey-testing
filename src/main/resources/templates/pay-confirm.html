@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Confirm Payment</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h1>Confirm Payment</h1>
+        <p>Review the exact transaction details before approving with your passkey.</p>
+        <div class="grid">
+            <div>
+                <h2>Details</h2>
+                <p><strong>Payee:</strong> <span id="confirmPayee"></span></p>
+                <p><strong>Amount:</strong> <span id="confirmAmount"></span></p>
+                <p><strong>Purpose:</strong> <span id="confirmPurpose"></span></p>
+            </div>
+            <div>
+                <h2>Approval</h2>
+                <button id="approvePayment">Approve with Passkey</button>
+                <div class="status" id="approveStatus"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="module">
+    import { initPaymentConfirmation } from '/js/payments.js';
+    initPaymentConfirmation('[[${txnId}]]');
+</script>
+</body>
+</html>

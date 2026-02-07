@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enroll Passkey</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h1>Create a Passkey</h1>
+        <p>This will create a discoverable, device-bound passkey on this device.</p>
+        <button id="createPasskey">Create Passkey</button>
+        <div class="status" id="passkeyStatus"></div>
+    </div>
+</div>
+<script type="module" th:src="@{/js/passkey.js}"></script>
+</body>
+</html>
