@@ -5,6 +5,10 @@ server:
       cookie:
         same-site: strict
         secure: false
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
 
 spring:
   datasource:
