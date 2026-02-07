@@ -130,12 +130,15 @@ export async function encryptFetch(path, payload) {
   if (data && data.v === 1 && data.ct && data.iv && data.mac) {
     const decrypted = await decryptResponse(data);
     if (!response.ok) {
-      throw new Error(decrypted.error || decrypted.message || 'Request failed');
+      const message = decrypted.error || decrypted.message || `Request failed (${response.status})`;
+      const err = new Error(message);
+      err.details = decrypted;
+      throw err;
     }
     return decrypted;
   }
   if (!response.ok) {
-    throw new Error(data.error || 'Request failed');
+    throw new Error(data.error || data.message || `Request failed (${response.status})`);
   }
   return data;
 }

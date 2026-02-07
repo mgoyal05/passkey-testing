@@ -34,7 +34,8 @@ button?.addEventListener('click', async () => {
   } catch (err) {
     const message = err?.message || 'Passkey enrollment failed.';
     status.textContent = message;
-    showError(message, err?.stack || message);
+    const detailPayload = err?.details ? JSON.stringify(err.details, null, 2) : err?.stack;
+    showError(message, detailPayload || message);
     console.error('Passkey enrollment error:', err);
   }
 });
