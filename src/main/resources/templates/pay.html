@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Initiate Payment</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h1>Create Payment</h1>
+        <p>Provide payee and amount, then approve with your passkey.</p>
+        <label for="payeeVpa">Payee VPA</label>
+        <input id="payeeVpa" placeholder="payee@upi" />
+        <label for="payeeName">Payee Name</label>
+        <input id="payeeName" placeholder="Payee Name" />
+        <label for="amountMinor">Amount (minor units)</label>
+        <input id="amountMinor" type="number" placeholder="50000" />
+        <label for="purpose">Purpose</label>
+        <input id="purpose" placeholder="Invoice" />
+        <button id="createPayment">Create Payment</button>
+        <div class="status" id="paymentStatus"></div>
+    </div>
+</div>
+<script type="module" th:src="@{/js/payments.js}"></script>
+</body>
+</html>
