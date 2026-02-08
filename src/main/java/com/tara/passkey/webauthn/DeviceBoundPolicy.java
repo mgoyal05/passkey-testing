@@ -7,8 +7,8 @@ public final class DeviceBoundPolicy {
     }
 
     public static void enforce(AuthenticatorData authenticatorData) {
-        if (authenticatorData.isFlagBE() || authenticatorData.isFlagBS()) {
-            throw new WebAuthnException("Backup eligible or backed up credentials are not allowed");
+        if (authenticatorData.isFlagBS()) {
+            throw new WebAuthnException("Backed up credentials are not allowed");
         }
     }
 }

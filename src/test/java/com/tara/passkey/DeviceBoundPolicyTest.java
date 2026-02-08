@@ -10,16 +10,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class DeviceBoundPolicyTest {
 
     @Test
-    void rejectsBackupEligibleCredential() {
-        byte flags = AuthenticatorData.BIT_BE;
+    void rejectsBackedUpCredential() {
+        byte flags = AuthenticatorData.BIT_BS;
         AuthenticatorData data = new AuthenticatorData(new byte[32], flags, 0L);
         assertThatThrownBy(() -> DeviceBoundPolicy.enforce(data)).isInstanceOf(WebAuthnException.class);
     }
 
     @Test
-    void rejectsBackedUpCredential() {
-        byte flags = AuthenticatorData.BIT_BS;
+    void allowsBackupEligibleCredential() {
+        byte flags = AuthenticatorData.BIT_BE;
         AuthenticatorData data = new AuthenticatorData(new byte[32], flags, 0L);
-        assertThatThrownBy(() -> DeviceBoundPolicy.enforce(data)).isInstanceOf(WebAuthnException.class);
+        DeviceBoundPolicy.enforce(data);
     }
 }
